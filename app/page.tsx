@@ -24,12 +24,12 @@ export default async function Index() {
   const isSupabaseConnected = canInitSupabaseClient();
 
   return (
-    <div className="flex-1 w-full flex flex-col items-center text-white">
+    <div className=" w-full min-h-full items-center text-white">
       <Navbar />
 
       {/*2 sections of content after navbar*/}
-      <div className="bg-navBlue w-full py-20">
-        <div className="container mx-auto px-4">
+      <div className="bg-navBlue w-full px-4 py-10 ">
+        <div className="container mx-auto max-w-6xl">
           <div className="flex justify-between items-start gap-4">
             {/* Left Section: "Helping you get competitive pricing on video game consoles" + search bar */}
             <div className="flex-1 p-4">
@@ -129,7 +129,7 @@ export default async function Index() {
             </div>
           </div>
         </div>
-        <div className="text-center mt-20">
+        <div className="text-center mt-20 mb-5">
           <p className="text-2xl text-gray-800 font-semibold mb-4">
             So, what are you waiting for?
           </p>

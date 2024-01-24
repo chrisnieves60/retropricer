@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <nav className="text-white w-full flex justify-center h-32 bg-navBlue">
-      <div className="w-full max-w-4xl flex items-center justify-between p-3">
+      <div className="w-full max-w-6xl flex items-center justify-between p-3">
         <div className="flex gap-x-4">
           <Link href="/">Home</Link>
           <Link href="/consoles">Consoles</Link>
@@ -12,7 +12,7 @@ export default function Header() {
         </div>
 
         <div className="flex flex-col items-center gap-y-4">
-          <div className="flex gap-x-4">
+          <div className="flex gap-x-4 mt-5">
             <Link href="/login" className="pt-3 pr-5">
               Log in{" "}
             </Link>
