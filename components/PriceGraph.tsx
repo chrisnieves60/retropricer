@@ -28,24 +28,17 @@ const PriceGraph = ({ data }) => {
       x: {
         type: "time",
         time: {
-          unit: "day",
-          tooltipFormat: "MMM d, yyyy",
+          unit: "minute", // Changed to 'minute' for more granularity
+          tooltipFormat: "MMM d, yyyy, h:mm a", // Format to show date and time
         },
         title: {
           display: true,
           text: "Date",
         },
         ticks: {
-          // This will ensure that even if there's no data for a particular date,
-          // the axis will still render the dates within this range
           source: "auto",
           autoSkip: true,
         },
-        // Define the min and max range of the axis
-        min: new Date(
-          new Date().setDate(new Date().getDate() - 15),
-        ).toISOString(),
-        max: new Date().toISOString(),
       },
       y: {
         title: {
@@ -55,6 +48,7 @@ const PriceGraph = ({ data }) => {
       },
     },
   };
+
   //expects data to be array of objects with data and price
   const chartData = {
     labels: data.map((d) => d.timestamp),

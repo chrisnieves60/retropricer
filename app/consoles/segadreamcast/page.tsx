@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 import AWS from "../../../awsConfig";
 import "dotenv/config";
 import PriceGraph from "@/components/PriceGraph";
-import myPic from "@/public/n64.png";
+import myPic from "@/public/segadreamcast.png";
 import { subWeeks, subMonths, subDays, isAfter } from "date-fns";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
@@ -57,7 +57,7 @@ export default function Page() {
       const versions = await s3
         .listObjectVersions({
           Bucket: "retropricer",
-          Prefix: "scraped_data.json",
+          Prefix: "segaScraper.json",
         })
         .promise();
 
@@ -65,7 +65,7 @@ export default function Page() {
         s3
           .getObject({
             Bucket: "retropricer",
-            Key: "scraped_data.json",
+            Key: "segaScraper.json",
             VersionId: version.VersionId,
           })
           .promise(),
@@ -98,6 +98,7 @@ export default function Page() {
       case "1day":
         setFilteredData(
           versionData.filter((d) =>
+            // END: be15d9bcejpp
             isAfter(new Date(d.timestamp), subDays(now, 1)),
           ),
         );
@@ -177,7 +178,7 @@ export default function Page() {
               {/* Dummy graph content */}
               <div className="bg-white rounded-xl shadow-md h-68 p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Price Trend Graph
+                  Ebay Price Trend Graph
                 </h3>
                 {/* Placeholder for graph */}
                 <div className="h-full flex items-center justify-center">
