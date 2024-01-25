@@ -98,7 +98,6 @@ export default function Page() {
       case "1day":
         setFilteredData(
           versionData.filter((d) =>
-            // END: be15d9bcejpp
             isAfter(new Date(d.timestamp), subDays(now, 1)),
           ),
         );
