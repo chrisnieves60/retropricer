@@ -3,9 +3,9 @@ import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
 import nintendoLogo from "@/public/nintendo.png"; // Adjust the path if necessary
-import xboxLogo from "@/public/xboxLogo.png"; // Adjust the path if necessary
-import psLogo from "@/public/psLogo.png"; // Adjust the path if necessary
-import segaLogo from "@/public/segaLogo.png"; // Adjust the path if necessary
+import xboxLogo from "@/public/xboxlogo.png"; // Adjust the path if necessary
+import psLogo from "@/public/pslogo.png"; // Adjust the path if necessary
+import segaLogo from "@/public/segalogo.png"; // Adjust the path if necessary
 const Notes = ({ consoleIndex }) => {
   const [notes, setNotes] = useState([]);
 
@@ -177,9 +177,9 @@ const Notes = ({ consoleIndex }) => {
               <div className="flex items-center">
                 <h3 className="text-xl text-gray-700 mr-2">Manufacturer:</h3>
                 <Image
-                  src={nintendoLogo} // Assuming the image is imported
+                  src={nintendoLogo} // Assuming the s is imported
                   alt="Product Image"
-                  width={60} // Adjust the size to your preference
+                  width={60}
                   height={20}
                   layout="fixed" // 'fixed' layout for small images like badges
                 />
