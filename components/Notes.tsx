@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
 import nintendoLogo from "@/public/nintendo.png"; // Adjust the path if necessary
-import xboxLogo from "@/public/xboxlogo.png"; // Adjust the path if necessary
+import xboxLogo from "@/public/xboxLogo.png"; // Adjust the path if necessary
 import psLogo from "@/public/pslogo.png"; // Adjust the path if necessary
 import segaLogo from "@/public/segalogo.png"; // Adjust the path if necessary
 const Notes = ({ consoleIndex }) => {
