@@ -167,7 +167,7 @@ export default function Page() {
               </div>
               <div>
                 <p className="text-gray-500">
-                  <Notes consoleIndex={"10"} />
+                  <Notes consoleIndex={"4"} />
                 </p>
               </div>
             </div>

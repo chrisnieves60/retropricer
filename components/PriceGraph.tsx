@@ -13,6 +13,35 @@ import "chart.js/auto";
 import "chartjs-adapter-date-fns";
 
 const PriceGraph = ({ data }) => {
+  const getTimeUnit = () => {
+    if (data.length === 0) {
+      return "day"; // Default unit if data is empty
+    }
+
+    if (!data[0].timestamp || !data[data.length - 1].timestamp) {
+      console.error("Data is missing timestamp properties");
+      return "day"; // Default unit if timestamp is missing
+    }
+
+    const startDate = new Date(data[0].timestamp);
+    const endDate = new Date(data[data.length - 1].timestamp);
+    const timeDiff = endDate - startDate;
+
+    const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+    const oneMonth = oneDay * 30; // approximate milliseconds in a month
+    const threeMonths = oneMonth * 3;
+
+    if (timeDiff <= oneDay) {
+      return "hour";
+    } else if (timeDiff <= oneMonth) {
+      return "day";
+    } else if (timeDiff <= threeMonths) {
+      return "week";
+    } else {
+      return "month";
+    }
+  };
+
   const options = {
     responsive: true,
     plugins: {
@@ -28,7 +57,7 @@ const PriceGraph = ({ data }) => {
       x: {
         type: "time",
         time: {
-          unit: "minute", // Changed to 'minute' for more granularity
+          unit: getTimeUnit, // Changed to 'minute' for more granularity
           tooltipFormat: "MMM d, yyyy, h:mm a", // Format to show date and time
         },
         title: {
