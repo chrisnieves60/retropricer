@@ -16,7 +16,7 @@ import axios from "axios";
 
 export default function Page() {
   interface PriceData {
-    timestamp: Date;
+    timestamp: string;
     average_price: number;
   }
 
@@ -30,6 +30,7 @@ export default function Page() {
   useEffect(() => {
     fetchPrices().then((processedData) => {
       setVersionData(processedData);
+
       //calculate avg
       if (processedData.length > 0) {
         const total = processedData
@@ -54,8 +55,22 @@ export default function Page() {
       }
     });
   }, []);
-
   const s3 = new AWS.S3();
+
+  // AWS.config.update({
+  //   region: "us-east-1", // Confirm this is the correct region for your Identity Pool
+  // });
+
+  // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+  //   IdentityPoolId: "us-east-1:0c04d0d8-57cb-444c-af72-dcb33649959a", // Your confirmed Identity Pool ID
+  // });
+  // AWS.config.credentials.get((error) => {
+  //   if (error) {
+  //     console.error("Error refreshing credentials", error);
+  //   } else {
+  //     console.log("Credentials successfully refreshed");
+  //   }
+  // });
 
   async function fetchPrices(): Promise<PriceData[]> {
     try {
@@ -66,7 +81,6 @@ export default function Page() {
           Prefix: "dsScraper.json",
         })
         .promise();
-
       // Check if 'Versions' is defined and is an array
       if (!versions.Versions || !Array.isArray(versions.Versions)) {
         console.error("No versions found or 'Versions' is not an array");
@@ -89,6 +103,7 @@ export default function Page() {
         // Replace 'timestamp' and 'average_price' with the actual property names in your JSON
         const timestamp = content["timestamp "];
         const averagePrice = content.average_price;
+
         return {
           timestamp,
           average_price: averagePrice,
@@ -184,7 +199,7 @@ export default function Page() {
               </div>
               <div>
                 <p className="text-gray-500">
-                  <Notes consoleIndex={"6"} />
+                  <Notes consoleIndex={6} />
                 </p>
               </div>
             </div>

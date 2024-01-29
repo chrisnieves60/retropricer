@@ -12,8 +12,15 @@ import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import "chartjs-adapter-date-fns";
 
-const PriceGraph = ({ data }) => {
-  const getTimeUnit = () => {
+type priceGraphProps = {
+  data: dataPoint[];
+};
+type dataPoint = {
+  timestamp: string;
+  average_price: number;
+};
+const PriceGraph: React.FC<priceGraphProps> = ({ data }) => {
+  const getTimeUnit = (): "day" | "hour" | "week" | "month" => {
     if (data.length === 0) {
       return "day"; // Default unit if data is empty
     }
@@ -25,7 +32,7 @@ const PriceGraph = ({ data }) => {
 
     const startDate = new Date(data[0].timestamp);
     const endDate = new Date(data[data.length - 1].timestamp);
-    const timeDiff = endDate - startDate;
+    const timeDiff = endDate.getTime() - startDate.getTime();
 
     const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
     const oneMonth = oneDay * 30; // approximate milliseconds in a month
@@ -46,7 +53,7 @@ const PriceGraph = ({ data }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "top" as const, // Correctly using 'as const' for specific string literal type
       },
       title: {
         display: true,
@@ -55,17 +62,17 @@ const PriceGraph = ({ data }) => {
     },
     scales: {
       x: {
-        type: "time",
+        type: "time" as const, // Ensure this is 'time' or 'timeseries' as a specific string literal
         time: {
-          unit: getTimeUnit, // Changed to 'minute' for more granularity
-          tooltipFormat: "MMM d, yyyy, h:mm a", // Format to show date and time
+          unit: getTimeUnit() as "day" | "hour" | "week" | "month", // Ensure getTimeUnit() returns one of these specific units
+          tooltipFormat: "MMM d, yyyy, h:mm a",
         },
         title: {
           display: true,
           text: "Date",
         },
         ticks: {
-          source: "auto",
+          source: "auto" as const,
           autoSkip: true,
         },
       },

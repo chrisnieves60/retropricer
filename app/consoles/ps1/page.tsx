@@ -15,11 +15,17 @@ import Notes from "@/components/Notes";
 import axios from "axios";
 
 export default function Page() {
-  const [versionData, setVersionData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [average, setAverage] = useState(0);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
+  interface PriceData {
+    timestamp: string;
+    average_price: number;
+  }
+
+  // Use the type in your state hooks
+  const [versionData, setVersionData] = useState<PriceData[]>([]);
+  const [filteredData, setFilteredData] = useState<PriceData[]>([]);
+  const [average, setAverage] = useState<number>(0);
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] = useState<number>(0);
 
   useEffect(() => {
     fetchPrices().then((processedData) => {
@@ -51,7 +57,7 @@ export default function Page() {
 
   const s3 = new AWS.S3();
 
-  async function fetchPrices() {
+  async function fetchPrices(): Promise<PriceData[]> {
     try {
       // Retrieve the list of object versions
       const versions = await s3
@@ -61,6 +67,11 @@ export default function Page() {
         })
         .promise();
 
+      // Check if 'Versions' is defined and is an array
+      if (!versions.Versions || !Array.isArray(versions.Versions)) {
+        console.error("No versions found or 'Versions' is not an array");
+        return [];
+      }
       const dataPromises = versions.Versions.map((version) =>
         s3
           .getObject({
@@ -70,8 +81,10 @@ export default function Page() {
           })
           .promise(),
       );
+
       const dataObjects = await Promise.all(dataPromises);
       const processedData = dataObjects.map((data) => {
+        if (!data.Body) throw new Error("No data body found");
         const content = JSON.parse(data.Body.toString("utf-8"));
         // Replace 'timestamp' and 'average_price' with the actual property names in your JSON
         const timestamp = content["timestamp "];
@@ -84,11 +97,14 @@ export default function Page() {
 
       // Sort the data by timestamp
       processedData.sort(
-        (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
+        (a, b) =>
+          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
       );
+
       return processedData;
-    } catch (error) {
+    } catch (error: any) {
       console.error("An error occurred:", error.message);
+      return [];
     }
   }
   const filterData = (range = "") => {
@@ -168,7 +184,7 @@ export default function Page() {
               </div>
               <div>
                 <p className="text-gray-500">
-                  <Notes consoleIndex={"8"} />
+                  <Notes consoleIndex={8} />
                 </p>
               </div>
             </div>

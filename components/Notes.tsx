@@ -6,13 +6,27 @@ import nintendoLogo from "@/public/nintendo.png"; // Adjust the path if necessar
 import xboxLogo from "@/public/xboxLogo.png"; // Adjust the path if necessary
 import psLogo from "@/public/pslogo.png"; // Adjust the path if necessary
 import segaLogo from "@/public/segalogo.png"; // Adjust the path if necessary
-const Notes = ({ consoleIndex }) => {
-  const [notes, setNotes] = useState([]);
+
+type NotesProps = {
+  consoleIndex: number; // Use lowercase 'number' for the type
+};
+
+interface Note {
+  id: number;
+  name: string;
+  releaseDate: string;
+  description: string;
+  notableGames: string;
+}
+
+const Notes: React.FC<NotesProps> = ({ consoleIndex }) => {
+  const [notes, setNotes] = useState<Note[]>([]);
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+      const supabaseAnonKey = process.env
+        .NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
       const { data, error } = await supabase.from("consoles").select();
@@ -28,7 +42,7 @@ const Notes = ({ consoleIndex }) => {
   }, []);
 
   switch (consoleIndex) {
-    case "1":
+    case 1:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -72,7 +86,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "2":
+    case 2:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -116,7 +130,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "3":
+    case 3:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -160,7 +174,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "4":
+    case 4:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -205,7 +219,7 @@ const Notes = ({ consoleIndex }) => {
         </div>
       );
 
-    case "5":
+    case 5:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -249,7 +263,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "6":
+    case 6:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -293,7 +307,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "7":
+    case 7:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -337,7 +351,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "8":
+    case 8:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -381,7 +395,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "9":
+    case 9:
       return (
         <div>
           {notes && notes.length > 0 ? (
@@ -425,7 +439,7 @@ const Notes = ({ consoleIndex }) => {
           )}
         </div>
       );
-    case "10":
+    case 10:
       return (
         <div>
           {notes && notes.length > 0 ? (
