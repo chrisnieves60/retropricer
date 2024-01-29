@@ -1,9 +1,7 @@
 import DeployButton from "../components/DeployButton";
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import SignUpUserSteps from "@/components/SignUpUserSteps";
 import Header from "@/components/Header";
-import { cookies } from "next/headers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 export default async function Index() {
