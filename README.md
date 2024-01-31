@@ -28,6 +28,14 @@ As someone who enjoys playing video games, and has for my entire life, I really 
 - **Data Visualization**: Interactive graphs rendered with Chart.js.
 - **Database**: Supabase for storing non-pricing related data.
 
+## Images
+![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.01.55%20PM.png)
+![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.02.10%20PM.png)
+![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.36.03%20PM.png)
+![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.02.01%20PM.png)
+![Alt text for the GIF](/images/demo.gif)
+
+
 ## Development Setup
 
 To contribute to retroPricer, you'll need to set up your development environment.
