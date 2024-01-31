@@ -30,7 +30,6 @@ export default function Page() {
   useEffect(() => {
     fetchPrices().then((processedData) => {
       setVersionData(processedData);
-
       //calculate avg
       if (processedData.length > 0) {
         const total = processedData
@@ -55,22 +54,13 @@ export default function Page() {
       }
     });
   }, []);
+
   const s3 = new AWS.S3();
 
-  // AWS.config.update({
-  //   region: "us-east-1", // Confirm this is the correct region for your Identity Pool
-  // });
-
-  // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  //   IdentityPoolId: "us-east-1:0c04d0d8-57cb-444c-af72-dcb33649959a", // Your confirmed Identity Pool ID
-  // });
-  // AWS.config.credentials.get((error) => {
-  //   if (error) {
-  //     console.error("Error refreshing credentials", error);
-  //   } else {
-  //     console.log("Credentials successfully refreshed");
-  //   }
-  // });
+  s3.listBuckets((err, data) => {
+    if (err) console.log("Error", err);
+    else console.log("Bucket List", data.Buckets);
+  });
 
   async function fetchPrices(): Promise<PriceData[]> {
     try {
@@ -81,6 +71,7 @@ export default function Page() {
           Prefix: "dsScraper.json",
         })
         .promise();
+      console.log(versions);
       // Check if 'Versions' is defined and is an array
       if (!versions.Versions || !Array.isArray(versions.Versions)) {
         console.error("No versions found or 'Versions' is not an array");
@@ -97,6 +88,7 @@ export default function Page() {
       );
 
       const dataObjects = await Promise.all(dataPromises);
+
       const processedData = dataObjects.map((data) => {
         if (!data.Body) throw new Error("No data body found");
         const content = JSON.parse(data.Body.toString("utf-8"));
