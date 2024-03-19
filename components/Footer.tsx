@@ -9,7 +9,7 @@ export default function Footer() {
           className="font-bold hover:underline"
           rel="noreferrer"
         >
-          Supabase
+          Supabase, NextJS, and AWS
         </a>
       </p>
     </footer>

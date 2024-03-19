@@ -57,7 +57,7 @@ const PriceGraph: React.FC<priceGraphProps> = ({ data }) => {
       },
       title: {
         display: true,
-        text: "Average Game Price Trend Over Time",
+        text: "Average Game Price Trend Over Time (Updated every 6 hrs)",
       },
     },
     scales: {

@@ -7,21 +7,11 @@ export default function Header() {
         <div className="flex gap-x-4">
           <Link href="/">Home</Link>
           <Link href="/consoles">Consoles</Link>
-          <Link href="/contact">Contact</Link>
           <Link href="/about">About</Link>
         </div>
 
         <div className="flex flex-col items-center gap-y-4">
-          <div className="flex gap-x-4 mt-5">
-            <Link href="/login" className="pt-3 pr-5">
-              Log in{" "}
-            </Link>
-            <Link href="/register">
-              <button className=" p-5 bg-red-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-900 rounded">
-                Register
-              </button>
-            </Link>
-          </div>
+          <div className="flex gap-x-4 mt-5"></div>
           <div className="mb-3">
             <div className="relative mb-4 flex w-full flex-wrap items-stretch">
               <input

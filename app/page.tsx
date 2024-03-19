@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 export default async function Index() {
   return (
     <div className=" w-full min-h-full items-center text-white">
@@ -65,7 +66,6 @@ export default async function Index() {
 
             {/* Right Section: "Top Selling Consoles" + carousel */}
             <div className="flex-1 p-4 text-center">
-              <h2 className="text-xl font-bold mb-2">Top Selling Consoles</h2>
               {/* Carousel component */}
             </div>
           </div>
@@ -83,13 +83,13 @@ export default async function Index() {
               <p>
                 Get real-time updates on the latest prices for your favorite
                 retro video game consoles. Whether you're a collector or just
-                looking for a good deal, our extensive database ensures you get
-                the most competitive pricing available.
+                looking for a good deal, ensures you know when to buy/sell
+                consoles.
               </p>
             </div>
             <div className="max-w-md rounded overflow-hidden shadow-2xl bg-gradient-to-r from-green-400 to-teal-600 text-white p-6">
               <h2 className="text-xl font-semibold mb-2">
-                Rare Finds & Auctions
+                Rare Finds & Auctions (coming soon)
               </h2>
               <p>
                 Discover hidden gems and rare collectibles. Dive into our
@@ -119,7 +119,7 @@ export default async function Index() {
             Start tracking your favorite consoles now and never miss a deal!
           </p>
           <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded shadow-lg hover:shadow-xl transition duration-300">
-            Start Tracking Now!
+            <Link href="/consoles">Start Tracking Now!</Link>
           </button>
         </div>
       </div>
