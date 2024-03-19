@@ -14,8 +14,7 @@ As someone who enjoys playing video games, and has for my entire life, I really 
 - **Interactive Graphs**: Users can click on any of the 10 different consoles to view pricing data over the past 3 weeks.
 - **Time Filters**: Interactive buttons allow users to filter data views to 1 day, 2 days, etc., with the graph dynamically updating to reflect these changes.
 - **Supabase Integration**: Currently used for storing console descriptions and poised to support a future login system and user wishlist feature.
-![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.02.10%20PM.png)
-![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.36.03%20PM.png)
+
 
 ## Upcoming Features
 
