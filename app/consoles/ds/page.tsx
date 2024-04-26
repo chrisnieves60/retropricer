@@ -13,7 +13,8 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Notes from "@/components/Notes";
 import axios from "axios";
-
+import AdditionalInfo from "@/components/AdditionalInfo";
+import { useData } from "@/contexts/DataContext";
 export default function Page() {
   interface PriceData {
     timestamp: string;
@@ -22,11 +23,12 @@ export default function Page() {
 
   // Use the type in your state hooks
   const [versionData, setVersionData] = useState<PriceData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [filteredData, setFilteredData] = useState<PriceData[]>([]);
   const [average, setAverage] = useState<number>(0);
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
-
+  const data = useData();
   useEffect(() => {
     fetchPrices().then((processedData) => {
       setVersionData(processedData);
@@ -62,6 +64,7 @@ export default function Page() {
     else console.log("Bucket List", data.Buckets);
   });
 
+  //api call to fetch prices
   async function fetchPrices(): Promise<PriceData[]> {
     try {
       // Retrieve the list of object versions
@@ -92,7 +95,7 @@ export default function Page() {
       const processedData = dataObjects.map((data) => {
         if (!data.Body) throw new Error("No data body found");
         const content = JSON.parse(data.Body.toString("utf-8"));
-        // Replace 'timestamp' and 'average_price' with the actual property names in your JSON
+
         const timestamp = content["timestamp "];
         const averagePrice = content.average_price;
 
@@ -107,6 +110,7 @@ export default function Page() {
         (a, b) =>
           new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
       );
+      setIsLoading(false);
 
       return processedData;
     } catch (error: any) {
@@ -204,6 +208,7 @@ export default function Page() {
                   Ebay Price Trend Graph
                 </h3>
                 {/* Placeholder for graph */}
+
                 <div className="h-full flex items-center justify-center">
                   {filteredData.length > 0 ? (
                     <PriceGraph data={filteredData} />
@@ -262,75 +267,16 @@ export default function Page() {
                 </button>
               </div>
               {/* Rectangle for additional info */}
-              <div className="bg-white rounded-xl shadow-md mt-8 p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Used</h3>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead>
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Price Type
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Lowest
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Highest
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Avg
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          Ebay (Console Only)
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {min.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {max.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {average.toFixed(2)}
-                        </td>
-                      </tr>
-
-                      {/* Add more rows as needed */}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl shadow-md mt-8 p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Renewed
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead>
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Price Type
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Current Price
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr className="px-6 py-4 whitespace-nowrap">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          Amazon (Renewed)
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">129.00</td>
-                      </tr>
-                      {/* Add more rows as needed */}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <AdditionalInfo
+                min={min}
+                max={max}
+                average={average}
+                current_average={
+                  data && data.dsScraper
+                    ? parseFloat(data.dsScraper).toFixed(2)
+                    : null
+                }
+              />
             </div>
           </div>
         </div>

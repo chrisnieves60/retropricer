@@ -13,12 +13,15 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Notes from "@/components/Notes";
 import axios from "axios";
+import { useData } from "@/contexts/DataContext";
+import AdditionalInfo from "@/components/AdditionalInfo";
 
 export default function Page() {
   interface PriceData {
     timestamp: string;
     average_price: number;
   }
+  const data = useData();
 
   // Use the type in your state hooks
   const [versionData, setVersionData] = useState<PriceData[]>([]);
@@ -254,76 +257,16 @@ export default function Page() {
                   All
                 </button>
               </div>
-              {/* Rectangle for additional info */}
-              <div className="bg-white rounded-xl shadow-md mt-8 p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Used</h3>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead>
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Price Type
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Lowest
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Highest
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Avg
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          Ebay (Console Only)
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {min.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {max.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {average.toFixed(2)}
-                        </td>
-                      </tr>
-
-                      {/* Add more rows as needed */}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="bg-white rounded-xl shadow-md mt-8 p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Renewed
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead>
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Price Type
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Current Price
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr className="px-6 py-4 whitespace-nowrap">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          Amazon (Renewed)
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">129.00</td>
-                      </tr>
-                      {/* Add more rows as needed */}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <AdditionalInfo
+                min={min}
+                max={max}
+                average={average}
+                current_average={
+                  data && data.xboxScraper
+                    ? parseFloat(data.xboxScraper).toFixed(2)
+                    : null
+                }
+              />
             </div>
           </div>
         </div>

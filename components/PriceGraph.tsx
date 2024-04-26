@@ -1,3 +1,4 @@
+"use client";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +12,7 @@ import {
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import "chartjs-adapter-date-fns";
+import { useEffect, useState } from "react";
 
 type priceGraphProps = {
   data: dataPoint[];
@@ -48,58 +50,78 @@ const PriceGraph: React.FC<priceGraphProps> = ({ data }) => {
       return "month";
     }
   };
+  const [isLoading, setIsLoading] = useState(true);
+  const [chartData, setChartData] = useState<any>(null);
+  const [options, setOptions] = useState<any>(null);
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const, // Correctly using 'as const' for specific string literal type
-      },
-      title: {
-        display: true,
-        text: "Average Game Price Trend Over Time (Updated every 6 hrs)",
-      },
-    },
-    scales: {
-      x: {
-        type: "time" as const, // Ensure this is 'time' or 'timeseries' as a specific string literal
-        time: {
-          unit: getTimeUnit() as "day" | "hour" | "week" | "month", // Ensure getTimeUnit() returns one of these specific units
-          tooltipFormat: "MMM d, yyyy, h:mm a",
+  useEffect(() => {
+    // Define chartData and options here
+    const chartData = {
+      labels: data.map((d) => d.timestamp),
+      datasets: [
+        {
+          label: "Price",
+          data: data.map((d) => d.average_price),
+          fill: false,
+          borderColor: "rgb(75, 192, 192)",
+          tension: 0.1,
+        },
+      ],
+    };
+
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top" as const,
         },
         title: {
           display: true,
-          text: "Date",
-        },
-        ticks: {
-          source: "auto" as const,
-          autoSkip: true,
+          text: "Average Game Price Trend Over Time (Updated every 6 hrs)",
         },
       },
-      y: {
-        title: {
-          display: true,
-          text: "Average Price ($)",
+      scales: {
+        x: {
+          type: "time" as const,
+          time: {
+            unit: getTimeUnit() as "day" | "hour" | "week" | "month",
+            tooltipFormat: "MMM d, yyyy, h:mm a",
+          },
+          title: {
+            display: true,
+            text: "Date",
+          },
+          ticks: {
+            source: "auto" as const,
+            autoSkip: true,
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Average Price ($)",
+          },
         },
       },
-    },
-  };
+    };
 
-  //expects data to be array of objects with data and price
-  const chartData = {
-    labels: data.map((d) => d.timestamp),
-    datasets: [
-      {
-        label: "Price",
-        data: data.map((d) => d.average_price),
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
-  };
+    setChartData(chartData);
+    setOptions(options);
+    setIsLoading(false); // Set isLoading to false after chartData and options are defined
+  }, [data]);
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <>
+      {" "}
+      {isLoading ? (
+        <div className="h-full w-full flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-900"></div>
+        </div>
+      ) : (
+        <Line data={chartData} options={options} />
+      )}
+    </>
+  );
 };
 
 export default PriceGraph;

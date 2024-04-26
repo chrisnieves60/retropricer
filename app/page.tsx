@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import SearchBar from "@/components/SearchBar";
 export default async function Index() {
   return (
     <div className=" w-full min-h-full items-center text-white">
@@ -22,46 +23,7 @@ export default async function Index() {
                 retro game consoles
               </h2>
 
-              <form>
-                <label
-                  htmlFor="default-search"
-                  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-                >
-                  Search
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="search"
-                    id="default-search"
-                    className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search Consoles..."
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Search
-                  </button>
-                </div>
-              </form>
+              <SearchBar />
             </div>
 
             {/* Right Section: "Top Selling Consoles" + carousel */}
@@ -89,13 +51,12 @@ export default async function Index() {
             </div>
             <div className="max-w-md rounded overflow-hidden shadow-2xl bg-gradient-to-r from-green-400 to-teal-600 text-white p-6">
               <h2 className="text-xl font-semibold mb-2">
-                Rare Finds & Auctions (coming soon)
+                Email updates on pricing (coming soon)
               </h2>
               <p>
-                Discover hidden gems and rare collectibles. Dive into our
-                curated selection of auctions and sales to find that elusive
-                piece you've been searching for. From limited editions to
-                discontinued models, find it all here.
+                Create an account with us so that you can receive real-time
+                updates when a given console drops below a set price. This can
+                allow you to buy a console when it hits a low target price.
               </p>
             </div>
             <div className="max-w-md rounded overflow-hidden shadow-2xl bg-gradient-to-r from-purple-400 to-pink-600 text-white p-6">
@@ -103,10 +64,10 @@ export default async function Index() {
                 User-Friendly Interface
               </h2>
               <p>
-                Navigate the world of retro gaming with ease. Our intuitive
-                platform allows you to search, compare, and track prices
-                effortlessly. Plus, set up alerts so you never miss a deal on
-                the consoles you love.
+                With our dynamic price chart, you will be able to check previous
+                pricing trends of consoles. Our website has data on console
+                pricing trends dating back to January 2024. Average console
+                prices are updated every 6 hours.
               </p>
             </div>
           </div>

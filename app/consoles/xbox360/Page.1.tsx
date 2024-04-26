@@ -5,16 +5,11 @@ import { useState } from "react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import AWS from "../../../awsConfig";
-import "dotenv/config";
 import PriceGraph from "@/components/PriceGraph";
-import myPic from "@/public/ps1.png";
-import { subWeeks, subMonths, subDays, isAfter } from "date-fns";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import myPic from "@/public/xbox360.png";
+import { subDays, isAfter } from "date-fns";
 import Notes from "@/components/Notes";
-import axios from "axios";
 import { useData } from "@/contexts/DataContext";
-import AdditionalInfo from "@/components/AdditionalInfo";
 
 export default function Page() {
   interface PriceData {
@@ -66,7 +61,7 @@ export default function Page() {
       const versions = await s3
         .listObjectVersions({
           Bucket: "retropricer",
-          Prefix: "ps1Scraper.json",
+          Prefix: "xbox360Scraper.json",
         })
         .promise();
 
@@ -79,7 +74,7 @@ export default function Page() {
         s3
           .getObject({
             Bucket: "retropricer",
-            Key: "ps1Scraper.json",
+            Key: "xbox360Scraper.json",
             VersionId: version.VersionId,
           })
           .promise(),
@@ -187,7 +182,7 @@ export default function Page() {
               </div>
               <div>
                 <p className="text-gray-500">
-                  <Notes consoleIndex={8} />
+                  <Notes consoleIndex={5} />
                 </p>
               </div>
             </div>
@@ -258,16 +253,47 @@ export default function Page() {
                 </button>
               </div>
               {/* Rectangle for additional info */}
-              <AdditionalInfo
-                min={min}
-                max={max}
-                average={average}
-                current_average={
-                  data && data.ps1Scraper
-                    ? parseFloat(data.ps1Scraper).toFixed(2)
-                    : null
-                }
-              />
+              <div className="bg-white rounded-xl shadow-md mt-8 p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Used</h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Price Type
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Lowest
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Highest
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Avg
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          Ebay (Console Only)
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {min.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {max.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {average.toFixed(2)}
+                        </td>
+                      </tr>
+
+                      {/* Add more rows as needed */}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
