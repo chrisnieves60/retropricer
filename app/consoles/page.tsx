@@ -72,28 +72,28 @@ export default function page() {
         "Nintendo 64": [
           "Nintendo 64",
           n64,
-          releaseDate["Nintendo64"],
+          releaseDate["Nintendo 64"],
           average.scraped_data,
           "n64",
         ],
         "Playstation 1": [
           "Playstation 1",
           ps1,
-          releaseDate["Playstation 1"],
+          releaseDate["PlayStation 1"],
           average.ps1Scraper,
           "ps1",
         ],
         "Playstation 2": [
           "Playstation 2",
           ps2,
-          releaseDate["Playstation 2"],
+          releaseDate["PlayStation 2"],
           average.ps2Scraper,
           "ps2",
         ],
         "Playstation 3": [
           "Playstation 3",
           ps3,
-          releaseDate["Playstation 3"],
+          releaseDate["PlayStation 3"],
           average.ps3Scraper,
           "ps3",
         ],
@@ -146,7 +146,7 @@ export default function page() {
       <div className="flex flex-col flex-grow w-full bg-offWhite text-black p-10">
         <div className="container mx-auto">
           {/* Each Console Card */}
-          {Object.entries(consoleData).length > 0 && (
+          {Object.entries(consoleData).length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {Object.entries(consoleData).map(
                 ([consoleName, [name, image, releaseDate, data, link]]) => (
@@ -160,6 +160,22 @@ export default function page() {
                   />
                 ),
               )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {Array.from({ length: 8 }, (_, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-lg shadow-md animate-pulse"
+                >
+                  <div className="h-48 bg-gray-200 rounded-t-lg"></div>
+                  <div className="p-4 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded-full w-1/2"></div>
+                    <div className="h-4 bg-gray-200 rounded-full w-3/4"></div>
+                    <div className="h-4 bg-gray-200 rounded-full w-1/3"></div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 

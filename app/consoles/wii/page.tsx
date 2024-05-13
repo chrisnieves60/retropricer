@@ -51,7 +51,6 @@ export default function Page() {
         setMax(max);
         setMin(min);
         setAverage(total / processedData.length);
-        console.log("data stats set! hopfully this shows only once. ");
       } else {
         setAverage(0); // Or any default value in case versionData is empty
       }
@@ -89,7 +88,7 @@ export default function Page() {
       const processedData = dataObjects.map((data) => {
         if (!data.Body) throw new Error("No data body found");
         const content = JSON.parse(data.Body.toString("utf-8"));
-        // Replace 'timestamp' and 'average_price' with the actual property names in your JSON
+        console.log(content);
         const timestamp = content["timestamp "];
         const averagePrice = content.average_price;
         return {
