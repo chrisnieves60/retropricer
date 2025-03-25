@@ -17,10 +17,12 @@ import { useEffect, useState } from "react";
 type priceGraphProps = {
   data: dataPoint[];
 };
+
 type dataPoint = {
   timestamp: string;
   average_price: number;
 };
+
 const PriceGraph: React.FC<priceGraphProps> = ({ data }) => {
   const getTimeUnit = (): "day" | "hour" | "week" | "month" => {
     if (data.length === 0) {
@@ -50,69 +52,72 @@ const PriceGraph: React.FC<priceGraphProps> = ({ data }) => {
       return "month";
     }
   };
-  const [isLoading, setIsLoading] = useState(true);
+
   const [chartData, setChartData] = useState<any>(null);
   const [options, setOptions] = useState<any>(null);
 
   useEffect(() => {
-    // Define chartData and options here
-    const chartData = {
-      labels: data.map((d) => d.timestamp),
-      datasets: [
-        {
-          label: "Price",
-          data: data.map((d) => d.average_price),
-          fill: false,
-          borderColor: "rgb(75, 192, 192)",
-          tension: 0.1,
-        },
-      ],
-    };
+    // Only process chart data when data is available
+    if (data.length > 0) {
+      const newChartData = {
+        labels: data.map((d) => d.timestamp),
+        datasets: [
+          {
+            label: "Price",
+            data: data.map((d) => d.average_price),
+            fill: false,
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.1,
+          },
+        ],
+      };
 
-    const options = {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "top" as const,
-        },
-        title: {
-          display: true,
-          text: "Average Game Price Trend Over Time (Updated every 6 hrs)",
-        },
-      },
-      scales: {
-        x: {
-          type: "time" as const,
-          time: {
-            unit: getTimeUnit() as "day" | "hour" | "week" | "month",
-            tooltipFormat: "MMM d, yyyy, h:mm a",
+      const newOptions = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top" as const,
           },
           title: {
             display: true,
-            text: "Date",
-          },
-          ticks: {
-            source: "auto" as const,
-            autoSkip: true,
+            text: "Average Game Price Trend Over Time (Updated every 6 hrs)",
           },
         },
-        y: {
-          title: {
-            display: true,
-            text: "Average Price ($)",
+        scales: {
+          x: {
+            type: "time" as const,
+            time: {
+              unit: getTimeUnit() as "day" | "hour" | "week" | "month",
+              tooltipFormat: "MMM d, yyyy, h:mm a",
+            },
+            title: {
+              display: true,
+              text: "Date",
+            },
+            ticks: {
+              source: "auto" as const,
+              autoSkip: true,
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Average Price ($)",
+            },
           },
         },
-      },
-    };
+      };
 
-    setChartData(chartData);
-    setOptions(options);
-    setIsLoading(false); // Set isLoading to false after chartData and options are defined
+      setChartData(newChartData);
+      setOptions(newOptions);
+    }
   }, [data]);
+
+  // Determine loading state based on chart data
+  const isLoading = !chartData;
 
   return (
     <>
-      {" "}
       {isLoading ? (
         <div className="h-full w-full flex justify-center items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-900"></div>

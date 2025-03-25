@@ -6,14 +6,9 @@ import Image from "next/image";
 const consoles = [
   "Nintendo 64",
   "Playstation 1",
-  "Playstation 2",
-  "Playstation 3",
   "Sega Dreamcast",
-  "Xbox 360",
   "Xbox",
-  "Wii",
   "Gameboy Advance",
-  "Nintendo DS",
 ];
 
 const consoleRoutes: { [key: string]: string } = {
@@ -21,7 +16,7 @@ const consoleRoutes: { [key: string]: string } = {
   "Playstation 1": "ps1",
   "Playstation 2": "ps2",
   "Playstation 3": "ps3",
-  "Sega Dreamcast": "dreamcast",
+  "Sega Dreamcast": "segadreamcast",
   "Xbox 360": "xbox360",
   Xbox: "xbox",
   Wii: "wii",

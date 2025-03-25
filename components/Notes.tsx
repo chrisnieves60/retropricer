@@ -2,13 +2,22 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
-import nintendoLogo from "@/public/nintendo.png"; // Adjust the path if necessary
-import xboxLogo from "@/public/xboxLogo.png"; // Adjust the path if necessary
-import psLogo from "@/public/pslogo.png"; // Adjust the path if necessary
-import segaLogo from "@/public/segalogo.png"; // Adjust the path if necessary
+import { CONSOLE_NOTES } from "@/app/constants/ProductNote";
+import nintendoLogo from "@/public/nintendo.png";
+import xboxLogo from "@/public/xboxLogo.png";
+import psLogo from "@/public/pslogo.png";
+import segaLogo from "@/public/segalogo.png";
+
+// Manufacturer Logo Mapping
+const MANUFACTURER_LOGOS: { [key: string]: any } = {
+  Nintendo: nintendoLogo,
+  Microsoft: xboxLogo,
+  Sony: psLogo,
+  Sega: segaLogo,
+};
 
 type NotesProps = {
-  consoleIndex: number; // Use lowercase 'number' for the type
+  consoleIndex: number;
 };
 
 interface Note {
@@ -24,23 +33,11 @@ const Notes: React.FC<NotesProps> = ({ consoleIndex }) => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-      const supabaseAnonKey = process.env
-        .NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
-      const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-      const { data, error } = await supabase.from("consoles").select();
-      if (error) {
-        console.error("Error fetching notes:", error);
-        return;
-      }
-
-      setNotes(data);
+      setNotes(CONSOLE_NOTES);
     };
 
     fetchNotes();
   }, []);
-
   switch (consoleIndex) {
     case 1:
       return (

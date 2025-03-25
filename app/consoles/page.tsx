@@ -10,7 +10,7 @@ import ps1 from "@/public/ps1.png";
 import ps2 from "@/public/ps2.png";
 import ps3 from "@/public/ps3.png";
 import gba from "@/public/gba.png";
-import segadreamcast from "@/public/dreamcast.png";
+import segadreamcast from "@/public/segadreamcast.png";
 import ds from "@/public/ds.png";
 import wii from "@/public/wii.png";
 import { DataProvider, useData } from "../../contexts/DataContext";
@@ -83,19 +83,12 @@ export default function page() {
           average.ps1Scraper,
           "ps1",
         ],
-        "Playstation 2": [
-          "Playstation 2",
-          ps2,
-          releaseDate["PlayStation 2"],
-          average.ps2Scraper,
-          "ps2",
-        ],
-        "Playstation 3": [
-          "Playstation 3",
-          ps3,
-          releaseDate["PlayStation 3"],
-          average.ps3Scraper,
-          "ps3",
+        "Gameboy Advance": [
+          "Gameboy Advance",
+          gba,
+          releaseDate["Gameboy Advance"],
+          average.gbaScraper,
+          "gba",
         ],
         "Sega Dreamcast": [
           "Sega Dreamcast",
@@ -104,29 +97,8 @@ export default function page() {
           average.segaScraper,
           "segadreamcast",
         ],
-        "Xbox 360": [
-          "Xbox 360",
-          xbox360,
-          releaseDate["Xbox 360"],
-          average.xbox360Scraper,
-          "xbox360",
-        ],
+
         Xbox: ["Xbox", xbox, releaseDate["Xbox"], average.xboxScraper, "xbox"],
-        Wii: ["Wii", wii, releaseDate["Wii"], average.wiiScraper, "wii"],
-        "Gameboy Advance": [
-          "Gameboy Advance",
-          gba,
-          releaseDate["Gameboy Advance"],
-          average.gbaScraper,
-          "gba",
-        ],
-        "Nintendo DS": [
-          "Nintendo DS",
-          ds,
-          releaseDate["Nintendo DS"],
-          average.dsScraper,
-          "ds",
-        ],
       });
     }
   }, [releaseDate, average]);

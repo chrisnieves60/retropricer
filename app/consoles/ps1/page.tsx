@@ -15,12 +15,12 @@ import Notes from "@/components/Notes";
 import axios from "axios";
 import { useData } from "@/contexts/DataContext";
 import AdditionalInfo from "@/components/AdditionalInfo";
-
+import S3Service from "@/app/services/api/fetchS3";
+interface PriceData {
+  timestamp: string;
+  average_price: number;
+}
 export default function Page() {
-  interface PriceData {
-    timestamp: string;
-    average_price: number;
-  }
   const data = useData();
 
   // Use the type in your state hooks
@@ -31,85 +31,45 @@ export default function Page() {
   const [max, setMax] = useState<number>(0);
 
   useEffect(() => {
-    fetchPrices().then((processedData) => {
-      setVersionData(processedData);
-      //calculate avg
-      if (processedData.length > 0) {
-        const total = processedData
-          .map((data) => data.average_price)
-          .reduce((acc, price) => acc + price, 0);
+    const s3Service = new S3Service();
 
-        //calculate min
-        const min = processedData.reduce((min, current) => {
-          return current.average_price < min ? current.average_price : min;
-        }, Number.MAX_VALUE);
+    async function fetchAndProcessPrices() {
+      try {
+        //call api service to fetch s3 buckets and versions sorted
+        const processedData = await s3Service.fetchPrices("ps1Scraper.json");
 
-        const max = processedData.reduce((max, current) => {
-          return current.average_price > max ? current.average_price : max;
-        }, Number.MIN_VALUE);
+        //set version data
+        setVersionData(processedData);
+        //calculate avg
+        if (processedData.length > 0) {
+          const total = processedData
+            .map((data) => data.average_price)
+            .reduce((acc, price) => acc + price, 0);
 
-        setMax(max);
-        setMin(min);
-        setAverage(total / processedData.length);
-        console.log("data stats set! hopfully this shows only once. ");
-      } else {
-        setAverage(0); // Or any default value in case versionData is empty
+          //calculate min
+          const min = processedData.reduce((min, current) => {
+            return current.average_price < min ? current.average_price : min;
+          }, Number.MAX_VALUE);
+
+          //calculate max
+          const max = processedData.reduce((max, current) => {
+            return current.average_price > max ? current.average_price : max;
+          }, Number.MIN_VALUE);
+
+          setMax(max);
+          setMin(min);
+          setAverage(total / processedData.length);
+        } else {
+          setAverage(0); // Or any default value in case versionData is empty
+        }
+      } catch (error) {
+        console.error("Error fetching prices:", error);
       }
-    });
+    }
+    //call async function
+    fetchAndProcessPrices();
   }, []);
 
-  const s3 = new AWS.S3();
-
-  async function fetchPrices(): Promise<PriceData[]> {
-    try {
-      // Retrieve the list of object versions
-      const versions = await s3
-        .listObjectVersions({
-          Bucket: "retropricer",
-          Prefix: "ps1Scraper.json",
-        })
-        .promise();
-
-      // Check if 'Versions' is defined and is an array
-      if (!versions.Versions || !Array.isArray(versions.Versions)) {
-        console.error("No versions found or 'Versions' is not an array");
-        return [];
-      }
-      const dataPromises = versions.Versions.map((version) =>
-        s3
-          .getObject({
-            Bucket: "retropricer",
-            Key: "ps1Scraper.json",
-            VersionId: version.VersionId,
-          })
-          .promise(),
-      );
-
-      const dataObjects = await Promise.all(dataPromises);
-      const processedData = dataObjects.map((data) => {
-        if (!data.Body) throw new Error("No data body found");
-        const content = JSON.parse(data.Body.toString("utf-8"));
-        // Replace 'timestamp' and 'average_price' with the actual property names in your JSON
-        const timestamp = content["timestamp "];
-        const averagePrice = content.average_price;
-        return {
-          timestamp,
-          average_price: averagePrice,
-        };
-      });
-
-      // Sort the data by timestamp
-      processedData.sort(
-        (a, b) =>
-          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
-      );
-
-      return processedData;
-    } catch (error: any) {
-      console.error("An error occurred:", error.message);
-      return [];
-    }
-  }
   const filterData = (range = "") => {
     const now = new Date();
 
