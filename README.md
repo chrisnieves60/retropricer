@@ -89,7 +89,7 @@ To run RetroPricer locally, you’ll need:
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[AWS]: https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white
+[AWS]: https://img.shields.io/badge/AWS-FFA552?style=for-the-badge&logo=amazonaws&logoColor=white
 [AWS-url]: https://aws.amazon.com/
 [Supabase]: https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white
 [Supabase-url]: https://supabase.com/
