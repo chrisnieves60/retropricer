@@ -1,19 +1,37 @@
 # RetroPricer
 
-RetroPricer is an innovative web application that provides video game enthusiasts with the latest pricing trends for various gaming consoles. It leverages the power of AWS services to scrape eBay listings and presents the data through a dynamic and interactive front-end interface built with React and TailwindCSS.
 
-## What Is RetroPricer?
-Retropricer is a web app that tracks pricing of retro video game consoles! How does it work? There are multiple AWS Lambda functions set to periodically scrape eBay listings. Specifically, the prices of these consoles are processed to determine an average price for each model. This average price, along with other metadata such as timestamps and range data (minimum and maximum prices), is then stored in an S3 bucket. The frontend of the web app leverages this data, displaying the average prices on a graph for a visual representation of market trends. Additionally, it computes an overall average price, aggregating all historical data since the inception of the tracking functions, to provide a comprehensive view of price fluctuations over time.
+## What is RetroPricer?
 
-## Why? 
-As someone who enjoys playing video games, and has for my entire life, I really do have a passion for video games. I also enjoy full-stack web development, and I wanted to delve into AWS and some of its services. So I thought, why not combine two things I am passionate about? Lastly, I thought it might be interesting to see prices of retro video game consoles on the second hand market, as I feel theres a few things we can learn. The secondary market for retro consoles is rich with data that tells a story beyond just numbers. By analyzing pricing trends, I aim to uncover insights such as the factors driving the valuation of these consoles. Is it nostalgia, rarity, or perhaps the physical attributes like weight affecting shipping costs? How does the abundance of a console in the market influence its price point? As the project evolves, I anticipate it will reveal more about consumer behavior, market dynamics, and perhaps even broader trends in technology appreciation and collectibility. 
+**RetroPricer** is a web app that tracks real-time pricing trends for retro video game consoles on the secondhand market. It scrapes eBay listings via AWS Lambda functions and processes the data to calculate average, min, and max prices per console model. These are stored in an S3 bucket and visualized through a sleek frontend built with React and TailwindCSS.
 
+Users can explore:
+
+- **Price trend graphs** by console  
+- **Historical average prices** since tracking began  
+- **Insights into pricing volatility and market movement**
+
+---
+
+## Why I Built It
+
+I've always enjoyed video games and a full-stack development. I built RetroPricer as a fun way to go deep on AWS while also trying to gain insight on why prices vary so much between consoles, and why prices might fluctuate on these consoles.
+
+This project is also an exploration into the psychology of pricing:
+
+- Does **nostalgia** drive value more than rarity?  
+- How do **listing volume** and **shipping costs** impact pricing?  
+- Can we identify **collector trends** through raw data?
+
+RetroPricer is both a tech sandbox and a data storytelling experiment. The goal: to learn more about market dynamics while building something cool and useful.
+
+---
 ## Features
 
 - **Real-time Data**: Updates every 6 hours to ensure the latest console prices from eBay are reflected.
-- **Interactive Graphs**: Users can click on any of the 10 different consoles to view pricing data over the past 3 weeks.
+- **Interactive Graphs**: Users can click on any of the 5 different consoles to view pricing data over the past year.
 - **Time Filters**: Interactive buttons allow users to filter data views to 1 day, 2 days, etc., with the graph dynamically updating to reflect these changes.
-- **Supabase Integration**: Currently used for storing console descriptions and poised to support a future login system and user wishlist feature.
+- **Supabase Integration**: The goal is to implement authentication and have a price alert system to alert users when a given console drops below or above a certain price. 
 
 
 ## Upcoming Features
@@ -22,37 +40,58 @@ As someone who enjoys playing video games, and has for my entire life, I really 
 - **Wishlist**: Users will be able to add consoles to their wishlist and keep track of desired items.
 - **Price Alerts**: Feature to allow users to receive email notifications when a console's price drops below a set threshold.
 
-## Technologies Used
+### Built With
 
-- **Front-End**: React with TypeScript for type-safe code and TailwindCSS for styling.
-- **Back-End**: AWS Lambda functions orchestrated by AWS EventBridge for scraping eBay listings, with data stored in S3 buckets.
-- **Data Visualization**: Interactive graphs rendered with Chart.js.
-- **Database**: Supabase for storing non-pricing related data.
+This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![AWS][AWS]][AWS-url]
+* [![Supabase][Supabase]][Supabase-url]
+* [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## Images
 ![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.02.10%20PM.png)
 ![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.36.03%20PM.png)
-![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.02.01%20PM.png)
+![Alt text for the image](/images/ConsolesPage.png)
 ![Alt text for the GIF](/images/demo.gif)
 
 
-## Development Setup
+## 🧪 Getting Started (Advanced Users)
 
-To contribute to retroPricer, you'll need to set up your development environment.
+To run RetroPricer locally, you’ll need:
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/retropricer.git
+- Access to an AWS S3 bucket with preprocessed pricing data
+- A set of AWS Lambda functions scraping eBay listings and updating the bucket
+- Your own `.env` file with credentials, bucket URLs, and config keys
 
-# Navigate to the project directory
-cd retropricer
+> **Note:** This project was designed around AWS-first architecture and is not a turnkey solution. You’re welcome to explore the codebase for learning or inspiration!
 
-# Install dependencies
-npm install
-
-# Set up the necessary local environment variables
-cp .env.example .env
-# Then edit .env with your API keys and database credentials
-
-# Run the application locally
-npm start
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/othneildrew
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[AWS]: https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white
+[AWS-url]: https://aws.amazon.com/
+[Supabase]: https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white
+[Supabase-url]: https://supabase.com/
+[TailwindCSS]: https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
+[TailwindCSS-url]: https://tailwindcss.com/
