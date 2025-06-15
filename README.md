@@ -1,5 +1,15 @@
 # RetroPricer
 
+### Built With
+
+This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![AWS][AWS]][AWS-url]
+* [![Supabase][Supabase]][Supabase-url]
+* [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+
 
 ## What is RetroPricer?
 
@@ -40,25 +50,10 @@ RetroPricer is both a tech sandbox and a data storytelling experiment. The goal:
 - **Wishlist**: Users will be able to add consoles to their wishlist and keep track of desired items.
 - **Price Alerts**: Feature to allow users to receive email notifications when a console's price drops below a set threshold.
 
-### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![AWS][AWS]][AWS-url]
-* [![Supabase][Supabase]][Supabase-url]
-* [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ## Images
-![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.02.10%20PM.png)
-![Alt text for the image](/images/Screenshot%202024-01-31%20at%205.36.03%20PM.png)
-![Alt text for the image](/images/ConsolesPage.png)
-![Alt text for the GIF](/images/demo.gif)
-
+![Console pricing graph](/images/Screenshot%202024-01-31%20at%205.36.03%20PM.png)
+![Landing Page](/images/Screenshot%202024-01-31%20at%205.02.10%20PM.png)
+![Consoles Page](/images/ConsolesPage.png)
 
 ## 🧪 Getting Started (Advanced Users)
 
