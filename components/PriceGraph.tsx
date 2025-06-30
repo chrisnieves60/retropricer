@@ -119,8 +119,11 @@ const PriceGraph: React.FC<priceGraphProps> = ({ data }) => {
   return (
     <>
       {isLoading ? (
-        <div className="h-full w-full flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-900"></div>
+        <div>
+          <div className="h-full w-full flex justify-center items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-900"></div>
+          </div>
+          <h1>Please wait up to 30-60seconds...</h1>
         </div>
       ) : (
         <Line data={chartData} options={options} />
