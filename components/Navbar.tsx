@@ -10,7 +10,6 @@ export default function Header() {
           <Image alt="website logo" width={40} height={40} src={logo}></Image>
           <Link href="/">Home</Link>
           <Link href="/consoles">Consoles</Link>
-          <Link href="/about">About</Link>
         </div>
 
         <div className="flex flex-col items-center gap-y-4">
